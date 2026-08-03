@@ -98,7 +98,7 @@ def find_any(path=default_search_path, serial_number=None, cancellation_token=No
                     if (serial_number is None) or (serial_number == s):
                         return obj
                 
-                current_timeout = None if timeout is None else min(0, timeout - (time.monotonic() - wait_start))
+                current_timeout = None if timeout is None else max(0, timeout - (time.monotonic() - wait_start))
                 _discovery_signal.wait(current_timeout)
 
                 # TODO: it would be more sensible to raise an exception here but

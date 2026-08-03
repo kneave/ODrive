@@ -106,7 +106,10 @@ def launch_shell(args, mount,
             help = lambda: print_help(args, len(discovered_devices) > 0) 
             # to fix broken "%run -i script.py"
             locals()['__name__'] = globals()['__name__'] 
-            console = IPython.terminal.embed.InteractiveShellEmbed(banner1='')
+            # Pass interactive_variables as the user namespace so that
+            # devices discovered while the shell is running (e.g. dev0,
+            # odrv0) become available in the IPython console.
+            console = IPython.terminal.embed.InteractiveShellEmbed(banner1='', user_ns=interactive_variables)
 
             # hack to make IPython look like the regular console
             console.runcode = console.run_cell 
